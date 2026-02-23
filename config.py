@@ -5,13 +5,19 @@
 
 # Instagram usernames of shelters to monitor (without @)
 SHELTER_ACCOUNTS = [
-    "exemple_shelter_barcelona",   # ← replace with real usernames
-    "exemple_protectora_spain",
-    # add more...
+    "asociacionalmasbellas",   # ← replace with real usernames
+    "ladridosfelices",
+    "volver_a_latir",
+    "protectora.bcn",
+    "apagranollers_protectora",
+    "ladridos_vagabundos",
+    "protectoralahuellablanca",
+    "arcadenoesevilla",
+    "protectora_pelescapat"
 ]
 
 # How often to check for new posts (in minutes)
-CHECK_INTERVAL_MINUTES = 30
+CHECK_INTERVAL_MINUTES = 10
 
 # ── Filters ──────────────────────────────────────────────────
 # Only send a Telegram alert if ALL of these match.
