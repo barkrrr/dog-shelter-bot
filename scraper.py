@@ -35,6 +35,7 @@ def get_loader() -> instaloader.Instaloader:
             download_video_thumbnails=False,
             save_metadata=False,
             quiet=True,
+            fatal_status_codes=[400, 429],
         )
         ig_user = os.getenv("INSTAGRAM_USERNAME")
         ig_pass = os.getenv("INSTAGRAM_PASSWORD")
