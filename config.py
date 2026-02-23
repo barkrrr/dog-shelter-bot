@@ -1,0 +1,23 @@
+# ============================================================
+#  🐶 Dog Shelter Bot — Configuration
+#  Edit this file in GitHub to change shelters or filters.
+# ============================================================
+
+# Instagram usernames of shelters to monitor (without @)
+SHELTER_ACCOUNTS = [
+    "exemple_shelter_barcelona",   # ← replace with real usernames
+    "exemple_protectora_spain",
+    # add more...
+]
+
+# How often to check for new posts (in minutes)
+CHECK_INTERVAL_MINUTES = 30
+
+# ── Filters ──────────────────────────────────────────────────
+# Only send a Telegram alert if ALL of these match.
+# Set a value to None to disable that filter.
+
+FILTER_SIZE = "small"          # "small" | "medium" | "large" | None
+FILTER_MAX_AGE_YEARS = 5       # e.g. 5 means dogs up to 5 years old | None
+FILTER_MIN_CUTENESS = 6        # 1–10 | None
+FILTER_AGE_LABELS = None       # e.g. ["puppy", "young"] | None to allow all
