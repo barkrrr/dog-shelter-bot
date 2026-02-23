@@ -1,6 +1,7 @@
 """
 scraper.py — Fetches the latest posts from Instagram shelter accounts.
 Uses instaloader for reliability. Credentials are optional but recommended.
+Raises RateLimitError on 429s so the queue in main.py can handle backoff and retry.
 """
 
 import os
@@ -17,8 +18,12 @@ from typing import Optional
 
 logger = logging.getLogger(__name__)
 
-# Initialise a single loader instance (reused across checks)
 _loader: Optional[instaloader.Instaloader] = None
+
+
+class RateLimitError(Exception):
+    """Raised when Instagram returns a 429 / rate limit response."""
+    pass
 
 
 def get_loader() -> instaloader.Instaloader:
@@ -68,7 +73,10 @@ def fetch_image_b64(url: str, max_size_px: int = 800) -> Optional[str]:
 
 
 def get_latest_posts(shelter: str, max_posts: int = 5) -> list[RawPost]:
-    """Return the N most recent posts from a shelter account."""
+    """
+    Return the N most recent posts from a shelter account.
+    Raises RateLimitError if Instagram rate-limits the request.
+    """
     loader = get_loader()
     posts = []
     try:
@@ -86,9 +94,19 @@ def get_latest_posts(shelter: str, max_posts: int = 5) -> list[RawPost]:
                 image_b64=image_b64,
                 timestamp=str(post.date_utc),
             ))
-            time.sleep(random.uniform(1.5, 3.0))
+            time.sleep(random.uniform(4.0, 8.0))
+
     except instaloader.exceptions.ProfileNotExistsException:
         logger.error("Profile @%s not found — check username in config.py", shelter)
+
+    except instaloader.exceptions.QueryReturnedBadRequestException as e:
+        if "429" in str(e) or "too many requests" in str(e).lower():
+            raise RateLimitError(f"Rate limited on @{shelter}") from e
+        logger.error("Bad request for @%s: %s", shelter, e)
+
     except Exception as e:
+        if "429" in str(e) or "too many requests" in str(e).lower():
+            raise RateLimitError(f"Rate limited on @{shelter}") from e
         logger.error("Error fetching @%s: %s", shelter, e)
+
     return posts
