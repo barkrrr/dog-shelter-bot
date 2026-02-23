@@ -95,21 +95,16 @@ def get_latest_posts(shelter: str, max_posts: int = 5) -> list[RawPost]:
                 timestamp=str(post.date_utc),
             ))
             time.sleep(random.uniform(4.0, 8.0))
-
     except instaloader.exceptions.ProfileNotExistsException:
         logger.error("Profile @%s not found — check username in config.py", shelter)
-
     except instaloader.exceptions.TooManyRequestsException as e:
-            raise RateLimitError(f"Rate limited on @{shelter}") from e
-      
+        raise RateLimitError(f"Rate limited on @{shelter}") from e
     except instaloader.exceptions.QueryReturnedBadRequestException as e:
         if "429" in str(e) or "too many requests" in str(e).lower():
             raise RateLimitError(f"Rate limited on @{shelter}") from e
         logger.error("Bad request for @%s: %s", shelter, e)
-
     except Exception as e:
         if "429" in str(e) or "too many requests" in str(e).lower():
             raise RateLimitError(f"Rate limited on @{shelter}") from e
-        logger.error("Error fetching @%s: %s", shelter, e)    
-    
+        logger.error("Error fetching @%s: %s", shelter, e)
     return posts
