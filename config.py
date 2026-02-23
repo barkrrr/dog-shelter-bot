@@ -17,7 +17,7 @@ SHELTER_ACCOUNTS = [
 ]
 
 # How often to check for new posts (in minutes)
-CHECK_INTERVAL_MINUTES = 10
+CHECK_INTERVAL_MINUTES = 120
 
 # ── Filters ──────────────────────────────────────────────────
 # Only send a Telegram alert if ALL of these match.
