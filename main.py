@@ -91,8 +91,8 @@ def run_check_cycle(q: queue.PriorityQueue):
     """
     logger.info("── Starting check cycle across %d shelters ──", len(SHELTER_ACCOUNTS))
 
-    for shelter in SHELTER_ACCOUNTS:
-        q.put(QueueItem(process_at=time.time(), shelter=shelter))
+    for i, shelter in enumerate(SHELTER_ACCOUNTS):
+        q.put(QueueItem(process_at=time.time() + (i * 10 * 60), shelter=shelter))
 
     total_new = 0
     total_matches = 0
