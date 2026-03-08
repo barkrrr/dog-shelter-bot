@@ -4,17 +4,7 @@
 # ============================================================
 
 # Instagram usernames of shelters to monitor (without @)
-SHELTER_ACCOUNTS = [
-    "asociacionalmasbellas",   # ← replace with real usernames
-    "ladridosfelices",
-    "volver_a_latir",
-    "protectora.bcn",
-    "apagranollers_protectora",
-    "ladridos_vagabundos",
-    "protectoralahuellablanca",
-    "arcadenoesevilla",
-    "protectora_pelescapat"
-]
+SHELTER_ACCOUNTS = []
 
 # How often to check for new posts (in minutes)
 CHECK_INTERVAL_MINUTES = 120
